@@ -6,13 +6,13 @@ const app = express();
 
 const notFoundMiddleware = require('./middleware/not-found');
 const errorMiddleware = require('./middleware/error-handler');
-const res = require('express/lib/response');
+
 
 const PORT = process.env.PORT || 4000;
 
 // route
-app.get('/', () => {
-  res.send('<h1>Store API</h1><a href="/api/v1/products"></a>');
+app.get('/', (req, res) => {
+  res.send('<h1>Store API</h1><a href="/api/v1/products">products route</a>');
 });
 
 // products route
@@ -33,3 +33,4 @@ const start = async () => {
   }
 }
 
+start();
