@@ -1,10 +1,10 @@
-const { CustomAPIError } = require('../error/custom-error');
+// const { CustomAPIError } = require('../error/custom-error');
 
-function errorHandler(err, req, res, next) {
+async function errorHandler(err, req, res, next) {
 
-  if (err instanceof CustomAPIError) {
-    return res.status(err.statusCode).json({ msg: err.message });
-  }
+  // if (err instanceof CustomAPIError) {
+  //   return res.status(err.statusCode).json({ msg: err.message });
+  // }
 
   return res.status(500).json({ msg: 'something went wrong, try again later' });
 }
