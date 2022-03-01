@@ -5,12 +5,12 @@ const Product = require('../models/products');
 
 
 const getAllProductsStatic = async (req, res) => {
-  const products = await Product.find({}).select('name price');
+  const products = await Product.find({}).select('name price').limit(30);
   res.status(200).json({ msg: products, nbHits: products.length, });
 }
 
 const getAllProducts = async (req, res) => {
-  const { featured, company, name, sort, fields } = req.query;
+  const { featured, company, name, sort, fields, limit, page } = req.query;
   const queryObject = {};
 
   if (company) {
@@ -43,8 +43,13 @@ const getAllProducts = async (req, res) => {
     result = result.select(fieldsLists);
   }
 
+  const pageSelect = Number(page) || 1;
+  const limitSelect = Number(limit) || 10;
+  const skip = (pageSelect - 1) * limit;
 
-    const products = await result;
+  result = result.skip(skip).limit(limitSelect);
+
+  const products = await result;
   res.status(200).json({ msg: products, nbHits: products.length, });
 }
 
